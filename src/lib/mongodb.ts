@@ -118,5 +118,8 @@ export function getConnectionStatus(): {
 // Export the connectDB function as default
 export default connectDB;
 
+// Export as named export for compatibility
+export { connectDB as connectToDatabase };
+
 // Export mongoose for direct use if needed
 export { mongoose };

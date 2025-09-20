@@ -2,7 +2,7 @@ import { IAIProvider } from '@/models/AIProvider';
 import { IProviderAdapter } from '@/lib/providers/base-provider';
 import EmotionalSession from '@/models/EmotionalSession';
 import EmpathyEvent from '@/models/EmpathyEvent';
-import { executeQuery } from '@/lib/postgresql';
+import connectDB from '@/lib/mongodb';
 
 export interface EmpathyAmplifierConfig {
   aiProvider?: IAIProvider;
@@ -80,23 +80,19 @@ export class EmpathyAmplifierService {
     }
 
     try {
-      // Gather recent empathy data using PostgreSQL
-      const sessionsQuery = `
-        SELECT * FROM emotional_sessions
-        WHERE user_id = $1
-        ORDER BY start_time DESC
-        LIMIT 10
-      `;
-      const eventsQuery = `
-        SELECT * FROM empathy_events
-        WHERE user_id = $1
-        ORDER BY timestamp DESC
-        LIMIT 20
-      `;
+      // Connect to MongoDB
+      await connectDB();
 
+      // Gather recent empathy data using MongoDB
       const [recentSessions, recentEvents] = await Promise.all([
-        executeQuery(sessionsQuery, [userId]).then(result => result.rows),
-        executeQuery(eventsQuery, [userId]).then(result => result.rows),
+        EmotionalSession.find({ userId })
+          .sort({ startTime: -1 })
+          .limit(10)
+          .lean(),
+        EmpathyEvent.find({ userId })
+          .sort({ timestamp: -1 })
+          .limit(20)
+          .lean(),
       ]);
 
       // Perform comprehensive empathy analysis

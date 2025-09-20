@@ -1,384 +1,344 @@
-<div align="center">
+# Shin AI - Advanced AI Platform
 
-# 🚀 Shin AI Platform
+[![Build Status](https://img.shields.io/github/actions/workflow/status/your-username/shin-ai/ci.yml?branch=main)](https://github.com/your-username/shin-ai/actions)
+[![NPM Version](https://img.shields.io/npm/v/shin-ai)](https://www.npmjs.com/package/shin-ai)
+[![License](https://img.shields.io/github/license/your-username/shin-ai)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/your-username/shin-ai/pulls)
 
-**Advanced AI Platform for Building, Chatting, and Deploying with Multiple AI Models**
+Shin AI is a cutting-edge artificial intelligence platform built with Next.js 15 that provides advanced AI capabilities including multi-model chat, emotional intelligence optimization, cognitive enhancement, and more. The platform integrates with various AI providers and offers a comprehensive suite of tools for developers and end-users.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.5.3-black)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org)
-[![MongoDB](https://img.shields.io/badge/MongoDB-8.18.1-green)](https://www.mongodb.com)
-[![NextAuth](https://img.shields.io/badge/NextAuth-4.24.11-purple)](https://next-auth.js.org)
+## Table of Contents
 
-</div>
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Architecture](#architecture)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Security](#security)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
----
+## Features
 
-## 📋 Table of Contents
+### AI Chat Playground
+- Multi-model chat sessions with simultaneous responses
+- Support for various AI providers (OpenAI, Anthropic, etc.)
+- Real-time conversation comparison
+- Customizable system prompts
 
-- [✨ Features](#-features)
-- [🏗️ Architecture](#️-architecture)
-- [🚀 Quick Start](#-quick-start)
-- [📚 Core Modules](#-core-modules)
-- [🔧 Configuration](#-configuration)
-- [📊 Advanced Features](#-advanced-features)
-- [🔒 Security](#-security)
-- [📈 Monitoring](#-monitoring)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-
----
-
-## ✨ Features
-
-### 🤖 Multi-Provider AI Integration
-- **8+ AI Providers**: OpenAI, Anthropic, Google, Cohere, HuggingFace, Replicate, Together AI, Custom Providers
-- **Unified API**: Single interface to interact with multiple AI models simultaneously
-- **Provider Management**: Centralized API key and configuration management
-- **Load Balancing**: Intelligent routing and failover between providers
-
-### 💬 Advanced Chat System
-- **Multi-Model Conversations**: Chat with multiple AI models in parallel
-- **Session Management**: Persistent chat sessions with history
-- **Organization Support**: Multi-tenant architecture with organization-based access control
-- **Real-time Updates**: WebSocket support for live conversations
-
-### 🎨 Design Automation
-- **AI Website Builder**: Generate full-stack websites with AI assistance
-- **UI/UX Generation**: Automated interface design and prototyping
-- **Brand Identity Creation**: AI-powered branding and visual identity generation
-- **CAD Generation**: Computer-aided design automation
-- **Template System**: Reusable design templates and components
-
-### 🧠 Cognitive Computing Pipeline
-- **Symbolic Reasoning**: Prolog-style logic processing and inference
-- **Causal Inference**: Advanced causal reasoning and counterfactual analysis
-- **Knowledge Graphs**: Entity extraction, relationship mapping, and graph-based reasoning
-- **Emotion Analysis**: Multi-dimensional emotion detection and sentiment analysis
-- **Bias Detection**: Algorithmic bias identification and mitigation
-
-### 🏢 Enterprise Features
-- **Workspace Management**: Collaborative workspaces and project organization
-- **API Security**: Comprehensive API key management and security
-- **Usage Tracking**: Detailed analytics and quota management
-- **Zero Trust Architecture**: Advanced security framework implementation
-- **Blockchain Integration**: Decentralized data management and smart contracts
-
-### 📱 Interactive Media
-- **VR/AR Support**: Virtual and augmented reality content generation
-- **Game Development**: AI-assisted game creation and interactive experiences
-- **Avatar Systems**: Customizable AI avatars and virtual assistants
-- **Media Processing**: Advanced multimedia content generation
-
-### 🔍 Knowledge Management
-- **Memory Palace**: Spaced repetition and memory enhancement system
-- **Knowledge Graphs**: Intelligent knowledge organization and retrieval
-- **Learning Systems**: Adaptive learning paths and competency tracking
-- **Content Generation**: AI-powered content creation and management
-
----
-
-## 🏗️ Architecture
-
-### Technology Stack
-- **Frontend**: Next.js 15.5.3, React 19, TypeScript 5, Tailwind CSS 4
-- **Backend**: Next.js API Routes, MongoDB 8.18.1, Mongoose ODM
-- **Authentication**: NextAuth.js 4.24.11 with MongoDB adapter
-- **AI Integration**: LangChain 0.3.6, OpenAI SDK 5.22.0
-- **Real-time**: Socket.IO 4.8.1, WebSocket support
-- **Security**: bcryptjs, JWT, Express rate limiting, CORS, Helmet
-
-### System Architecture
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                           Shin AI Platform                              │
-├─────────────────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
-│  │   Chat &    │  │  Cognitive  │  │  Knowledge  │  │  Analytics  │     │
-│  │  Conversa-  │◄─┤  Pipeline   │◄─┤   Graph     │◄─┤   Engine    │     │
-│  │  tional AI  │  │             │  │             │  │             │     │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘     │
-├─────────────────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
-│  │   Provider  │  │  Database   │  │  Cache &    │  │  Monitoring │     │
-│  │  Factory    │  │  Layer      │  │  Storage    │  │  System     │     │
-│  │             │  │             │  │             │  │             │     │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘     │
-└─────────────────────────────────────────────────────────────────────────┘
-```
-
-### Database Schema
-- **Users & Organizations**: Multi-tenant user management with role-based access
-- **AI Providers**: Centralized provider configuration and API key management
-- **Chat Sessions**: Persistent conversation history and session management
-- **Knowledge Graphs**: Entity-relationship modeling and semantic networks
-- **Projects & Workspaces**: Collaborative project organization
-- **Usage & Analytics**: Comprehensive tracking and quota management
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+
-- MongoDB 6+
-- npm or yarn package manager
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yuski31/shin.git
-   cd shin/shin-ai
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Environment Setup**
-   ```bash
-   cp .env.local .env.local.example
-   ```
-
-   Configure your environment variables:
-   ```env
-   # Database
-   MONGODB_URI=mongodb://localhost:27017/shin-ai
-
-   # NextAuth
-   NEXTAUTH_SECRET=your-secret-key
-   NEXTAUTH_URL=http://localhost:3000
-
-   # AI Providers (add your API keys)
-   OPENAI_API_KEY=your-openai-api-key
-   ANTHROPIC_API_KEY=your-anthropic-api-key
-   GOOGLE_API_KEY=your-google-api-key
-
-   # Other services
-   REDIS_URL=redis://localhost:6379
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Production Deployment
-
-1. **Build the application**
-   ```bash
-   npm run build
-   ```
-
-2. **Start production server**
-   ```bash
-   npm start
-   ```
-
-3. **Deploy to Vercel (Recommended)**
-   ```bash
-   npm i -g vercel
-   vercel --prod
-   ```
-
----
-
-## 📚 Core Modules
-
-### Authentication System
-- **NextAuth.js Integration**: Secure authentication with multiple providers
-- **Organization Support**: Multi-tenant architecture
-- **Role-Based Access**: Granular permission management
-- **Session Management**: Persistent user sessions
+### Emotional Intelligence Maximizer
+- Mood optimization algorithms
+- Neurotransmitter balancing
+- Cognitive behavioral therapy augmentation
+- Anxiety reduction protocols
+- Happiness maximization techniques
 
 ### AI Provider Management
-- **Factory Pattern**: Extensible provider architecture
-- **Configuration Management**: Centralized API key storage
-- **Load Balancing**: Intelligent provider selection
-- **Health Monitoring**: Provider availability tracking
+- Centralized API key management
+- Multi-provider support
+- Model configuration
+- Usage tracking and quotas
 
-### Chat Engine
-- **Multi-Model Support**: Concurrent conversations with multiple AIs
-- **Session Persistence**: Long-term conversation history
-- **Real-time Updates**: WebSocket-based live updates
-- **Message Streaming**: Progressive response generation
+### Advanced AI Capabilities
+- Brain-Computer Interface (BCI) integration
+- Blockchain smart contract analysis
+- Focus enhancement tools
+- Healthcare AI applications
+- Extended Reality (XR) experiences
+- Zero-trust security protocols
 
-### Design Automation
-- **Website Generation**: Full-stack web application creation
-- **UI Component Library**: Reusable design components
-- **Brand Identity**: Automated branding and visual design
-- **CAD Integration**: Computer-aided design automation
+### Data Management
+- PostgreSQL with vector search capabilities
+- ChromaDB for semantic search
+- MongoDB for flexible document storage
+- Comprehensive data synchronization
 
-### Knowledge Management
-- **Memory Palace**: Spaced repetition learning system
-- **Knowledge Graphs**: Semantic relationship mapping
-- **Content Generation**: AI-powered content creation
-- **Learning Analytics**: Adaptive learning path optimization
+## Technology Stack
 
----
+### Frontend
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible UI primitives
+- **Three.js** - 3D graphics library
+- **React Three Fiber** - React renderer for Three.js
 
-## 🔧 Configuration
+### Backend
+- **Next.js API Routes** - Serverless functions
+- **Node.js** - JavaScript runtime
+- **MongoDB** - Document database
+- **PostgreSQL** - Relational database with vector extensions
+- **ChromaDB** - Vector database for embeddings
+- **Redis** - In-memory data structure store
 
-### Environment Variables
-```env
-# Core Configuration
-NODE_ENV=development
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-key
+### AI & Machine Learning
+- **Langchain** - Framework for developing LLM applications
+- **OpenAI API** - GPT models
+- **Anthropic API** - Claude models
+- **Microsoft Cognitive Services** - Speech and language processing
+- **Natural** - Natural language processing library
 
-# Database
-MONGODB_URI=mongodb://localhost:27017/shin-ai
+### Security
+- **NextAuth.js** - Authentication solution
+- **JWT** - Token-based authentication
+- **Bcrypt** - Password hashing
+- **Helmet** - Security headers
+- **Rate Limiting** - API request throttling
 
-# AI Providers
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-GOOGLE_API_KEY=AIza...
-COHERE_API_KEY=...
-HUGGINGFACE_API_KEY=hf_...
-REPLICATE_API_KEY=r8_...
-TOGETHER_API_KEY=...
+### DevOps
+- **Docker** - Containerization
+- **GitHub Actions** - CI/CD pipelines
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **Jest** - Testing framework
 
-# External Services
-REDIS_URL=redis://localhost:6379
-MONGODB_ATLAS_URI=mongodb+srv://...
+## Architecture
 
-# Security
-ENCRYPTION_KEY=your-encryption-key
-JWT_SECRET=your-jwt-secret
-
-# Monitoring
-SENTRY_DSN=your-sentry-dsn
-LOG_LEVEL=info
+```mermaid
+graph TD
+    A[Frontend - Next.js 15] --> B[API Layer]
+    B --> C[Authentication - NextAuth.js]
+    B --> D[AI Provider Management]
+    B --> E[Emotional Intelligence Engine]
+    B --> F[Chat Services]
+    B --> G[Data Services]
+    
+    D --> H[OpenAI API]
+    D --> I[Anthropic API]
+    D --> J[Other AI Providers]
+    
+    E --> K[Mood Optimization Engine]
+    E --> L[Neurotransmitter Balancing]
+    E --> M[CBT Augmentation]
+    
+    F --> N[Chat Sessions]
+    F --> O[Message Processing]
+    
+    G --> P[PostgreSQL - Primary DB]
+    G --> Q[MongoDB - Document Store]
+    G --> R[ChromaDB - Vector Store]
+    G --> S[Redis - Caching]
+    
+    P --> T[pgvector Extension]
+    R --> U[Embedding Similarity Search]
+    
+    B --> V[Security Layer]
+    V --> W[API Key Management]
+    V --> X[Rate Limiting]
+    V --> Y[Quota Management]
+    
+    Z[External Services] --> B
+    Z --> H
+    Z --> I
+    Z --> J
 ```
 
-### Provider Configuration
-Each AI provider can be configured through the admin interface:
-- API endpoints and authentication
-- Model selection and parameters
-- Rate limiting and quotas
-- Custom headers and timeouts
+## Installation
 
----
+### Prerequisites
+- Node.js 18.x or higher
+- PostgreSQL with pgvector extension
+- MongoDB
+- ChromaDB
+- Docker (optional, for containerized services)
 
-## 📊 Advanced Features
+### Setup
 
-### Cognitive Computing Pipeline
-- **Symbolic Reasoning**: Logic-based inference and deduction
-- **Causal Analysis**: Counterfactual reasoning and scenario modeling
-- **Knowledge Processing**: Entity extraction and relationship mapping
-- **Emotion Intelligence**: Multi-dimensional emotion detection
-- **Bias Mitigation**: Algorithmic fairness and ethical AI
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/shin-ai.git
+cd shin-ai
+```
 
-### Zero Trust Security
-- **Identity Verification**: Multi-factor authentication and verification
-- **Microsegmentation**: Network segmentation and access control
-- **Threat Intelligence**: Real-time threat detection and response
-- **Continuous Monitoring**: Behavioral analytics and anomaly detection
+2. Install dependencies:
+```bash
+npm install
+```
 
-### Blockchain Integration
-- **Smart Contracts**: Automated contract generation and deployment
-- **Decentralized Storage**: IPFS integration for content storage
-- **Token Management**: Cryptocurrency and NFT integration
-- **Supply Chain**: Blockchain-based traceability and provenance
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
 
-### Edge AI Infrastructure
-- **Edge Computing**: Distributed AI processing at the network edge
-- **IoT Integration**: Internet of Things data processing
-- **Real-time Analytics**: Streaming data analysis and insights
-- **Offline Capabilities**: AI processing without internet connectivity
+4. Configure your database connections and API keys in `.env.local`:
+```env
+# Database - PostgreSQL Configuration
+DATABASE_URL=postgresql://user:password@localhost:5432/shin_ai
 
----
+# MongoDB Configuration
+MONGODB_URI=mongodb://localhost:27017/shin_ai
 
-## 🔒 Security
+# ChromaDB Configuration
+CHROMADB_HOST=localhost
+CHROMADB_PORT=8000
 
-### Authentication & Authorization
-- **Multi-provider OAuth**: Google, GitHub, and custom providers
-- **JWT Tokens**: Secure session management
-- **Role-Based Access Control**: Granular permissions
-- **Organization Scoping**: Multi-tenant data isolation
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key-here
 
-### API Security
-- **API Key Management**: Secure key generation and rotation
-- **Rate Limiting**: Request throttling and quota management
-- **Input Validation**: Comprehensive data validation
-- **CORS Protection**: Cross-origin request handling
+# OpenAI API
+OPENAI_API_KEY=your-openai-api-key-here
+
+# Anthropic API
+ANTHROPIC_API_KEY=your-anthropic-api-key-here
+```
+
+5. Initialize databases:
+```bash
+# Initialize PostgreSQL
+npm run db:init
+
+# Start ChromaDB (if using Docker)
+docker run -p 8000:8000 chromadb/chroma
+```
+
+6. Run the development server:
+```bash
+npm run dev
+```
+
+7. Open your browser to http://localhost:3000
+
+## Usage
+
+### Starting the Application
+```bash
+# Development mode
+npm run dev
+
+# Production build
+npm run build
+npm start
+```
+
+### API Endpoints
+
+#### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/signin` - User login
+
+#### AI Providers
+- `GET /api/providers` - List AI providers
+- `POST /api/providers` - Create new AI provider
+- `GET /api/providers/:id` - Get specific provider
+- `PUT /api/providers/:id` - Update provider
+- `DELETE /api/providers/:id` - Delete provider
+
+#### Chat
+- `GET /api/chat` - List chat sessions
+- `POST /api/chat` - Create new chat session
+- `GET /api/chat/:id` - Get chat session
+- `POST /api/chat/:id/messages` - Send message to chat
+
+#### Emotional Intelligence
+- `GET /api/emotional-intelligence/sessions` - List emotional sessions
+- `POST /api/emotional-intelligence/sessions` - Create emotional session
+- `GET /api/emotional-intelligence/mood-metrics` - Get mood metrics
+- `POST /api/emotional-intelligence/insights` - Generate emotional insights
+
+### Example: Creating a Chat Session
+```javascript
+const response = await fetch('/api/chat', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${session.accessToken}`
+  },
+  body: JSON.stringify({
+    title: 'My AI Chat',
+    mode: 'multi-model',
+    providerIds: ['provider-1', 'provider-2']
+  })
+});
+
+const chatSession = await response.json();
+```
+
+## API Documentation
+
+The API follows RESTful principles and uses standard HTTP status codes. All endpoints require authentication unless otherwise specified.
+
+### Authentication
+API requests require a valid authentication token. Include the token in the Authorization header:
+```
+Authorization: Bearer <your-token>
+```
+
+### Rate Limiting
+The API implements rate limiting to prevent abuse:
+- 100 requests per minute per IP
+- 100 requests per hour per authenticated user
+
+### Error Handling
+API errors are returned in a consistent format:
+```json
+{
+  "error": "Error message",
+  "code": "ERROR_CODE"
+}
+```
+
+## Security
+
+### Authentication
+- JWT-based authentication with refresh tokens
+- Secure password hashing with bcrypt
+- Multi-factor authentication support
 
 ### Data Protection
-- **Encryption at Rest**: Database-level encryption
-- **Secure Communication**: TLS/SSL encryption
-- **Audit Logging**: Comprehensive activity tracking
-- **Data Anonymization**: Privacy-preserving data handling
+- All data is encrypted at rest
+- TLS encryption for data in transit
+- Regular security audits
+- Compliance with privacy regulations
 
----
+### API Security
+- API key management with scopes
+- Rate limiting
+- Request validation
+- Input sanitization
 
-## 📈 Monitoring
+### Best Practices
+1. Never commit API keys or secrets to version control
+2. Use environment variables for configuration
+3. Regularly rotate API keys
+4. Monitor usage and set up alerts
+5. Keep dependencies up to date
 
-### Performance Monitoring
-- **Application Metrics**: Response times, throughput, error rates
-- **Resource Usage**: CPU, memory, disk utilization
-- **Custom Dashboards**: Real-time performance visualization
-- **Alerting**: Automated notifications for performance issues
+## Contributing
 
-### Business Analytics
-- **User Engagement**: Session duration, feature usage
-- **Conversion Tracking**: User journey and conversion funnels
-- **Revenue Analytics**: Subscription and usage metrics
-- **Custom Reports**: Business intelligence dashboards
+We welcome contributions to Shin AI! Here's how you can help:
 
-### Error Tracking
-- **Exception Monitoring**: Application errors and exceptions
-- **Performance Issues**: Slow queries and bottlenecks
-- **User Experience**: Error rates and user impact
-- **Root Cause Analysis**: Detailed error investigation tools
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Here's how you can help:
-
-### Development Setup
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and add tests
-4. Commit your changes: `git commit -m 'Add amazing feature'`
-5. Push to the branch: `git push origin feature/amazing-feature`
-6. Open a Pull Request
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a pull request
 
-### Contribution Guidelines
-- Follow the existing code style and conventions
-- Add tests for new features and bug fixes
-- Update documentation for any API changes
+### Development Guidelines
+- Follow the existing code style
+- Write tests for new features
+- Update documentation as needed
 - Ensure all tests pass before submitting
-- Follow the commit message conventions
 
-### Areas for Contribution
-- **AI Provider Integrations**: Add support for new AI services
-- **Feature Development**: Implement new cognitive capabilities
-- **Performance Optimization**: Improve system performance and scalability
-- **Security Enhancements**: Strengthen security measures
-- **Documentation**: Improve guides and API documentation
+### Reporting Issues
+- Use the issue tracker for bugs and feature requests
+- Provide detailed information about the problem
+- Include steps to reproduce when reporting bugs
 
----
-
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Contact
+
+For support, questions, or feedback, please reach out to:
+
+- **Email**: support@shin-ai.com
+- **GitHub Issues**: [https://github.com/your-username/shin-ai/issues](https://github.com/your-username/shin-ai/issues)
+- **Twitter**: [@ShinAIPlatform](https://twitter.com/ShinAIPlatform)
+
 ---
 
-<div align="center">
-
-**Built with ❤️ by the Shin AI Team**
-
-[🌐 Website](https://shin-ai.com) • [📖 Documentation](https://docs.shin-ai.com) • [💬 Discord](https://discord.gg/shin-ai) • [🐛 Issues](https://github.com/yuski31/shin/issues)
-
-</div>
+*Shin AI - Empowering the Future with Advanced Artificial Intelligence*

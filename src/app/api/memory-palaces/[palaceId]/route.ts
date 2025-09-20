@@ -46,7 +46,7 @@ const UpdateMemoryPalaceSchema = z.object({
 // GET /api/memory-palaces/[palaceId] - Get specific memory palace
 export async function GET(
   request: NextRequest,
-  { params }: { params: { palaceId: string } }
+  { params }: { params: Promise<{ palaceId: string  }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -93,7 +93,7 @@ export async function GET(
 // PUT /api/memory-palaces/[palaceId] - Update specific memory palace
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { palaceId: string } }
+  { params }: { params: Promise<{ palaceId: string  }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -152,7 +152,7 @@ export async function PUT(
 // DELETE /api/memory-palaces/[palaceId] - Delete specific memory palace
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { palaceId: string } }
+  { params }: { params: Promise<{ palaceId: string  }> }
 ) {
   try {
     const session = await getServerSession(authOptions);

@@ -1,5 +1,4 @@
 import { NextRequest } from 'next/server';
-import { apiKeyService } from './database';
 import connectDB from './mongodb';
 import ApiKey, { verifyApiKey } from '@/models/ApiKey';
 import UsageEvent from '@/models/UsageEvent';

@@ -8,7 +8,7 @@ import Organization from '@/models/Organization';
 // DELETE /api/keys/[keyId] - Revoke API key
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { keyId: string } }
+  { params }: { params: Promise<{ keyId: string  }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
