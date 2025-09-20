@@ -2,7 +2,7 @@ import { IAIProvider } from '@/models/AIProvider';
 import { IProviderAdapter } from '@/lib/providers/base-provider';
 import EmotionalSession from '@/models/EmotionalSession';
 import MoodMetric from '@/models/MoodMetric';
-import connectDB from '@/lib/mongodb';
+import { executeQuery } from '@/lib/postgresql';
 
 export interface MoodOptimizationConfig {
   aiProvider?: IAIProvider;
@@ -53,7 +53,7 @@ export interface MoodOptimizationResult {
     crisisDetected: boolean;
     professionalHelpRecommended: boolean;
     sessionPaused: boolean;
-    reason?: string;
+    reason?: string | undefined;
   };
   insights: string[];
   recommendations: string[];
@@ -98,7 +98,7 @@ export interface TherapeuticProtocol {
 
 export class MoodOptimizationEngine {
   private config: MoodOptimizationConfig;
-  private therapeuticProtocols: Map<string, TherapeuticProtocol>;
+  private therapeuticProtocols: Map<string, TherapeuticProtocol> = new Map();
 
   constructor(config: MoodOptimizationConfig = {}) {
     this.config = {
@@ -122,17 +122,23 @@ export class MoodOptimizationEngine {
     }
 
     try {
-      await connectDB();
+      // Gather current mood data using PostgreSQL
+      const sessionsQuery = `
+        SELECT * FROM emotional_sessions
+        WHERE user_id = $1
+        ORDER BY start_time DESC
+        LIMIT 5
+      `;
+      const metricsQuery = `
+        SELECT * FROM mood_metrics
+        WHERE user_id = $1
+        ORDER BY timestamp DESC
+        LIMIT 10
+      `;
 
-      // Gather current mood data
       const [recentSessions, recentMetrics] = await Promise.all([
-        EmotionalSession.find({ userId })
-          .sort({ startTime: -1 })
-          .limit(5),
-
-        MoodMetric.find({ userId })
-          .sort({ timestamp: -1 })
-          .limit(10),
+        executeQuery(sessionsQuery, [userId]).then(result => result.rows),
+        executeQuery(metricsQuery, [userId]).then(result => result.rows),
       ]);
 
       // Analyze current mood state
@@ -178,10 +184,14 @@ export class MoodOptimizationEngine {
    * Simulate neurotransmitter balancing
    */
   async analyzeNeurotransmitterProfile(userId: string): Promise<NeurotransmitterProfile> {
-    // Get recent mood data
-    const recentMetrics = await MoodMetric.find({ userId })
-      .sort({ timestamp: -1 })
-      .limit(20);
+    // Get recent mood data using PostgreSQL
+    const metricsQuery = `
+      SELECT * FROM mood_metrics
+      WHERE user_id = $1
+      ORDER BY timestamp DESC
+      LIMIT 20
+    `;
+    const recentMetrics = await executeQuery(metricsQuery, [userId]).then(result => result.rows);
 
     if (recentMetrics.length === 0) {
       return this.getDefaultNeurotransmitterProfile();
@@ -853,7 +863,7 @@ export class MoodOptimizationEngine {
       return acc;
     }, {});
 
-    const dominantType = Object.entries(typeCounts).sort(([,a], [,b]) => b - a)[0]?.[0];
+    const dominantType = Object.entries(typeCounts).sort(([,a], [,b]) => (b as number) - (a as number))[0]?.[0];
 
     if (dominantType) {
       patterns.push(`Frequent ${dominantType} sessions`);

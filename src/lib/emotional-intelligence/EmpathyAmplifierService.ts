@@ -2,7 +2,7 @@ import { IAIProvider } from '@/models/AIProvider';
 import { IProviderAdapter } from '@/lib/providers/base-provider';
 import EmotionalSession from '@/models/EmotionalSession';
 import EmpathyEvent from '@/models/EmpathyEvent';
-import connectDB from '@/lib/mongodb';
+import { executeQuery } from '@/lib/postgresql';
 
 export interface EmpathyAmplifierConfig {
   aiProvider?: IAIProvider;
@@ -80,17 +80,23 @@ export class EmpathyAmplifierService {
     }
 
     try {
-      await connectDB();
+      // Gather recent empathy data using PostgreSQL
+      const sessionsQuery = `
+        SELECT * FROM emotional_sessions
+        WHERE user_id = $1
+        ORDER BY start_time DESC
+        LIMIT 10
+      `;
+      const eventsQuery = `
+        SELECT * FROM empathy_events
+        WHERE user_id = $1
+        ORDER BY timestamp DESC
+        LIMIT 20
+      `;
 
-      // Gather recent empathy data
       const [recentSessions, recentEvents] = await Promise.all([
-        EmotionalSession.find({ userId })
-          .sort({ startTime: -1 })
-          .limit(10),
-
-        EmpathyEvent.find({ userId })
-          .sort({ timestamp: -1 })
-          .limit(20),
+        executeQuery(sessionsQuery, [userId]).then(result => result.rows),
+        executeQuery(eventsQuery, [userId]).then(result => result.rows),
       ]);
 
       // Perform comprehensive empathy analysis
@@ -388,7 +394,7 @@ export class EmpathyAmplifierService {
     }, {});
 
     const dominantStyle = Object.entries(outcomeCounts)
-      .sort(([,a], [,b]) => b - a)[0]?.[0] || 'mixed';
+      .sort(([,a], [,b]) => (b as number) - (a as number))[0]?.[0] || 'mixed';
 
     // Identify strengths and improvement areas
     const strengths: string[] = [];

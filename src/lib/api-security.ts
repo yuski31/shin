@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { apiKeyService } from './database';
 import connectDB from './mongodb';
 import ApiKey, { verifyApiKey } from '@/models/ApiKey';
 import UsageEvent from '@/models/UsageEvent';
@@ -59,8 +60,7 @@ export async function authenticateApiKey(request: NextRequest): Promise<ApiKeyAu
     await connectDB();
 
     // Find and validate API key
-    const ApiKeyModel = require('@/models/ApiKey').default;
-    const apiKeyDoc = await ApiKeyModel.findByKey(apiKey);
+    const apiKeyDoc = await (ApiKey as any).findByKey(apiKey);
     if (!apiKeyDoc) {
       return {
         isValid: false,
@@ -140,7 +140,7 @@ export async function trackUsage(data: UsageTrackingData): Promise<void> {
 
     // Update API key usage
     if (data.apiKey) {
-      const apiKey = await ApiKey.findById(data.apiKey);
+      const apiKey = await (ApiKey as any).findById(data.apiKey);
       if (apiKey) {
         await apiKey.incrementUsage();
       }
@@ -172,8 +172,21 @@ export async function checkQuotas(
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const UsageEventModel = require('@/models/UsageEvent').default;
-    const todayStats = await UsageEventModel.getOrganizationStats(organizationId, today, new Date());
+    const todayStats = await (UsageEvent as any).aggregate([
+      {
+        $match: {
+          organization: organizationId,
+          timestamp: { $gte: today, $lt: new Date() }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalRequests: { $sum: '$requestCount' },
+          totalTokens: { $sum: '$inputTokens' }
+        }
+      }
+    ]).then((result: any[]) => result[0] || { totalRequests: 0, totalTokens: 0 });
 
     if (todayStats.totalRequests + requestCount > organization.quotas.requestsPerDay) {
       return {
@@ -249,7 +262,7 @@ export async function detectSuspiciousActivity(
     const userAgent = request.headers.get('user-agent') || 'unknown';
 
     // Check for rapid requests from same IP (simplified)
-    const recentRequests = await UsageEvent.find({
+    const recentRequests = await (UsageEvent as any).find({
       apiKey: apiKeyId,
       'metadata.ipAddress': clientIP,
       timestamp: { $gte: new Date(Date.now() - 60 * 1000) }, // Last minute
@@ -263,7 +276,7 @@ export async function detectSuspiciousActivity(
     }
 
     // Check for requests from many different IPs in short time
-    const recentRequestsByIP = await UsageEvent.distinct('metadata.ipAddress', {
+    const recentRequestsByIP = await (UsageEvent as any).distinct('metadata.ipAddress', {
       apiKey: apiKeyId,
       timestamp: { $gte: new Date(Date.now() - 60 * 60 * 1000) }, // Last hour
     });
